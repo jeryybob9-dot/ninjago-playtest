@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ninjago Playtest</title>
+<meta name="description" content="Live progress of the Ninjago Complete mod's bot playtest.">
+<meta name="theme-color" content="#6e1610">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Playtest">
+<meta name="format-detection" content="telephone=no">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="app.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="bar" id="bar">
+  <div class="bar-row">
+    <div class="bar-title">
+      <h1>Ninjago playtest</h1>
+      <span class="pill" id="state">Loading</span>
+    </div>
+    <button class="icon-btn" id="refresh" type="button" aria-label="Refresh">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v5h-5"/></svg>
+    </button>
+  </div>
+  <div class="bar-sub" id="updated">Fetching the latest from the playtest PC…</div>
+</header>
+
+<main id="view">
+  <div class="banner" id="banner" hidden></div>
+
+  <section class="tab" id="tab-now" data-tab="now" hidden>
+    <article class="card hero">
+      <div class="hero-top">
+        <span class="eyebrow">Run</span>
+        <span class="hero-run" id="run">—</span>
+        <span class="muted small" id="build"></span>
+      </div>
+      <p class="hero-obj" id="objective">—</p>
+      <p class="hero-line" id="doing"></p>
+      <p class="hero-line stop" id="stopped" hidden></p>
+      <div class="hero-meta"><span id="started"></span><span id="elapsed"></span></div>
+    </article>
+
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-n" id="pass">—</span>
+        <span class="stat-l">items passed</span>
+        <div class="meter"><span id="pass-meter"></span></div>
+        <span class="stat-s" id="pass-share"></span>
+      </div>
+      <div class="stat">
+        <span class="stat-n" id="fail">—</span>
+        <span class="stat-l">failed</span>
+        <span class="stat-s" id="unverified"></span>
+      </div>
+      <div class="stat">
+        <span class="stat-n" id="quests">—</span>
+        <span class="stat-l">quests done</span>
+        <span class="stat-s" id="furthest"></span>
+      </div>
+      <div class="stat">
+        <span class="stat-n" id="deaths">—</span>
+        <span class="stat-l">bot deaths</span>
+        <span class="stat-s">It respawns and carries on</span>
+      </div>
+    </div>
+
+    <article class="card">
+      <h2>The bot</h2>
+      <div class="vital"><span>Health</span><div class="meter hp"><span id="hp-meter"></span></div><span class="vital-n" id="hp"></span></div>
+      <div class="vital"><span>Food</span><div class="meter food"><span id="food-meter"></span></div><span class="vital-n" id="food"></span></div>
+      <dl class="kv">
+        <dt>Where</dt><dd id="where">—</dd>
+        <dt>Last seen</dt><dd id="seen">—</dd>
+      </dl>
+    </article>
+
+    <article class="card">
+      <h2>Latest events</h2>
+      <ol class="events" id="events"></ol>
+    </article>
+  </section>
+
+  <section class="tab" id="tab-runs" data-tab="runs" hidden>
+    <article class="card">
+      <h2>Items passed per run</h2>
+      <p class="note">Each counted run starts a fresh world from item 1. Every run so far stopped on a gap in the bot or a bug in the mod, fixed before the next. Tap a bar for that run.</p>
+      <div class="legend">
+        <span><i style="background: var(--idle-strong)"></i>Bot gap</span>
+        <span><i style="background: var(--bad)"></i>Mod bug</span>
+        <span><i style="background: var(--ok)"></i>Latest run</span>
+      </div>
+      <div class="chart" id="runs-chart"></div>
+    </article>
+    <ol class="list" id="runs"></ol>
+  </section>
+
+  <section class="tab" id="tab-items" data-tab="items" hidden>
+    <article class="card">
+      <h2>By chapter</h2>
+      <p class="note">The bot plays in story order, so later chapters fill in as it gets there. Tap a chapter to list its items.</p>
+      <div class="chapters" id="chapters"></div>
+    </article>
+    <div class="filters" id="filters">
+      <input class="search" id="q" type="search" placeholder="Search items" aria-label="Search items" autocomplete="off" autocorrect="off" spellcheck="false">
+      <div class="chips" id="verdicts" role="group" aria-label="Verdict"></div>
+      <div class="filter-note"><span id="item-count"></span><button class="link-btn" id="clear-chapter" type="button" hidden></button></div>
+    </div>
+    <ol class="items" id="items"></ol>
+  </section>
+
+  <section class="tab" id="tab-bugs" data-tab="bugs" hidden>
+    <p class="note lead">Mod bugs the playtest found. Each is fixed in the mod and has a bench check that fails without the fix and passes with it.</p>
+    <ol class="list" id="bugs"></ol>
+  </section>
+</main>
+
+<nav class="tabs" aria-label="Sections">
+  <a href="#now" data-tab="now">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg><span>Now</span>
+  </a>
+  <a href="#runs" data-tab="runs">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>Runs</span>
+  </a>
+  <a href="#items" data-tab="items">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M3.5 6l1.2 1.2L7 5M3.5 12l1.2 1.2L7 11M3.5 18l1.2 1.2L7 17"/></svg><span>Items</span>
+  </a>
+  <a href="#bugs" data-tab="bugs">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8a4 4 0 0 1 8 0v1H8z"/><rect x="7" y="9" width="10" height="11" rx="5"/><path d="M12 12v8M3 13h4M17 13h4M4 7l3 2M20 7l-3 2M4 19l3-2M20 19l-3-2"/></svg><span>Bugs</span>
+  </a>
+</nav>
+</body>
+</html>
