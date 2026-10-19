@@ -81,7 +81,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: rgba(255, 255, 255, 0.7); }
 .pill[data-state="Running"]::before { background: #7ee29a; animation: pulse 2s infinite; }
 .pill[data-state="Stopped"]::before { background: #ff8a7a; }
-.pill[data-state="Fixing the bot"]::before, .pill[data-state="Checking a fix"]::before { background: #ffd27a; }
+.pill[data-state="Fixing the bot"]::before, .pill[data-state="Checking a fix"]::before, .pill[data-state="Feature sweep"]::before { background: #ffd27a; }
 @keyframes pulse {
   0% { box-shadow: 0 0 0 0 rgba(126, 226, 154, 0.6); }
   70% { box-shadow: 0 0 0 7px rgba(126, 226, 154, 0); }

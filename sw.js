@@ -3,7 +3,7 @@
 // Offline support for the playtest tracker. The app shell is cached per version (tools/playtest_pages.py stamps the
 // version from the shell's contents on every publish); the data is always fetched fresh, and its last good copy is
 // served, marked x-pt-cache: 1, only when the network fails.
-const VERSION = 'abb4b286183b';
+const VERSION = 'f5463d1ae022';
 const SHELL = `shell-${VERSION}`;
 const DATA = 'data';
 const SHELL_FILES = ['./', 'index.html', 'app.css', 'app.js', 'manifest.webmanifest',
