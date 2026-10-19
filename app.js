@@ -119,7 +119,7 @@
   function renderNow() {
     const s = status();
     const run = thisRun();
-    const live = s.state === 'Running';
+    const live = s.state === 'Running' || s.state === 'Story sweep';
     $('run').textContent = s.run ?? '—';
     $('build').textContent = s.build ? `build ${s.build}` : '';
     $('objective').textContent = s.objective || s.now || '—';

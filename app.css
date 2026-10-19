@@ -80,6 +80,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 .pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: rgba(255, 255, 255, 0.7); }
 .pill[data-state="Running"]::before { background: #7ee29a; animation: pulse 2s infinite; }
+.pill[data-state="Story sweep"]::before { background: #9cc8ff; animation: pulse 2s infinite; }
 .pill[data-state="Stopped"]::before { background: #ff8a7a; }
 .pill[data-state="Fixing the bot"]::before, .pill[data-state="Checking a fix"]::before, .pill[data-state="Feature sweep"]::before { background: #ffd27a; }
 @keyframes pulse {
@@ -191,7 +192,7 @@ main {
 .k-Pass, .k-Quest, .c-latest { color: var(--ok); }
 .k-Fail, .k-Stall, .c-mod-bug { color: var(--bad); }
 .k-Unverified, .k-Death { color: var(--warn); }
-.k-Objective, .k-Not-reached, .c-bot { color: var(--muted); }
+.k-Objective, .k-Not-reached, .c-bot, .c-approach-change { color: var(--muted); }
 
 /* ---- runs */
 .legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--muted); }
